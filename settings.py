@@ -4,7 +4,7 @@ pygame.mixer.init()
 
 win_width = 700
 win_height = 500
-FPS = 20
+FPS = 60
 
 win = pygame.display.set_mode((win_width, win_height))
 clock = pygame.time.Clock()
