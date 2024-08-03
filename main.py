@@ -1,5 +1,5 @@
-from settings import *
-
+from objects import *
+player = Player(player_image, 100, 100, 50, 50, 5)
 game = True
 
 while True:
@@ -9,6 +9,8 @@ while True:
 
     if game:
         win.blit(background_image, (0, 0))
+        player.update()
+        player.draw()
 
     pygame.display.update()
     clock.tick(FPS)
