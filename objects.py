@@ -54,4 +54,14 @@ class Player(GameSprite):
 
         self.rotate(ang - 90)
 
+class Bullet(GameSprite):
+    def __init__(self, image, x, y, w, h, speed, angle):
+        super().__init__(image, x, y, w, h, speed)
+        self.angle = angle
+
+    def update(self):
+        self.hitbox.center = self.rect.center
+        self.rotate(math.degrees(-self.angle) - 90)
+        self.rect.x += math.cos(self.angle) * self.speed
+        self.rect.y += math.sin(self.angle) * self.speed
 
