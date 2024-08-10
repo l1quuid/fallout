@@ -66,7 +66,6 @@ class Player(GameSprite):
         dy = self.rect.centery - pos[1]
         ang = math.degrees(math.atan2(dy, dx))
 
-        self.rotate(ang - 90)
         self.rotate(ang)
 
     def fire(self):
