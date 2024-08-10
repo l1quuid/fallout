@@ -31,12 +31,15 @@ class Player(GameSprite):
         super().__init__(image, x, y, w, h, speed)
         self.max_hp = 100
         self.hp = self.max_hp
+        self.reload = 0
+        self.rate = 17
 
 
     def update(self):
         self.hitbox.center = self.rect.center
 
         keys = pygame.key.get_pressed()
+        mp = pygame.mouse.get_pressed()
 
         if keys[pygame.K_a] and self.rect.x > 0:
             self.rect.centerx -= self.speed
@@ -47,12 +50,35 @@ class Player(GameSprite):
         if keys[pygame.K_s] and self.rect.y < win_height - self.rect.height:
             self.rect.centery += self.speed
 
+        if mp[0]:
+            if self.reload == 0:
+                self.fire()
+                self.reload = self.rate
+
+        if self.reload != 0:
+            self.reload -= 1
+
+
+
+
         pos = pygame.mouse.get_pos()
         dx = pos[0] - self.rect.centerx
         dy = self.rect.centery - pos[1]
         ang = math.degrees(math.atan2(dy, dx))
 
         self.rotate(ang - 90)
+        self.rotate(ang)
+
+    def fire(self):
+        pistol_sound.set_volume(0.05)
+        pistol_sound.play()
+
+        pos = pygame.mouse.get_pos()
+        dx = pos[0] - self.rect.centerx
+        dy = self.rect.centery - pos[1]
+        ang = -math.atan2(dy, dx)
+        b = Bullet(bullet_image, self.rect.centerx, self.rect.centery, 8, 18, 70, ang)
+        bullets.add(b)
 
 class Bullet(GameSprite):
     def __init__(self, image, x, y, w, h, speed, angle):
