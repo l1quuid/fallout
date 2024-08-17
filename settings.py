@@ -29,7 +29,8 @@ choice_sound = pygame.mixer.Sound('sounds\\choice.ogg')
 buy_sound = pygame.mixer.Sound('sounds\\buy.ogg')
 
 bullets = pygame.sprite.Group()
+enemies = pygame.sprite.Group()
 
-fire_sound.set_volume(0.05)
+pistol_sound.set_volume(0.05)
 
 #pygame.mixer.music.load('sounds\\music.mp3')
