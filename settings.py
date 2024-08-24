@@ -6,7 +6,7 @@ win_width = 700
 win_height = 500
 FPS = 60
 
-win = pygame.display.set_mode((win_width, win_height))
+win = pygame.display.set_mode((win_width, win_height + 50))
 clock = pygame.time.Clock()
 
 background_image = pygame.transform.scale(pygame.image.load("textures/backg.jpg"), (win_width, win_height))
@@ -30,6 +30,9 @@ buy_sound = pygame.mixer.Sound('sounds\\buy.ogg')
 
 bullets = pygame.sprite.Group()
 enemies = pygame.sprite.Group()
+
+interface_rect = pygame.Rect(0, win_height, win_width, 50)
+interface_color = (150,150,100)
 
 pistol_sound.set_volume(0.05)
 
