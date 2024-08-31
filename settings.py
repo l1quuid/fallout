@@ -11,6 +11,7 @@ clock = pygame.time.Clock()
 
 background_image = pygame.transform.scale(pygame.image.load("textures/backg.jpg"), (win_width, win_height))
 menu_image = pygame.transform.scale(pygame.image.load("textures/menu.jpg"), (win_width, win_height))
+death_image = pygame.transform.scale(pygame.image.load("textures/yd.jpg"), (win_width, win_height))
 player_image = 'textures/ppistol.gif'
 zombie_images = ['textures/zombie.png', 'textures/lzombie.png', 'textures/big zombie.png']
 bullet_image = 'textures\\bullet.png'
