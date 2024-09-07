@@ -125,6 +125,33 @@ class Enemy(GameSprite):
         self.rect.x += math.cos(angle) * self.speed
         self.rect.y += math.sin(angle) * self.speed
 
+class Button(pygame.sprite.Sprite):
+    def __init__(self, x, y, w, h, color, label, callback):
+        super().__init__()
+        self.callback = callback
+        self.color = color
+        r = min(color[0] + 15, 255)
+        g = min(color[1] + 15, 255)
+        b = min(color[2] + 15, 255)
+        self.light_color = (r, g, b)
+        self.w = w
+        self.h = h
+        self.pressed = False
+
+        self.surface = pygame.Surface((w, h))
+        rect = self.surface.get_rect()
+        rect.center = x, y
+
+        self.text = label
+        self.label_rect = self.text.get_rect()
+        self.label_rect.centerx = w / 2
+        self.label_rect.centery = h / 2
+
+        self.surface.fill(self.color)
+        self.surface.blit(self.text, self.label_rect)
+
+
+
 
 
 

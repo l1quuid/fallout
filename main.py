@@ -1,9 +1,12 @@
 from objects import *
 player = Player(player_image, 100, 100, 50, 50, 3)
+
 game = True
+scores = 0
+boss_round = False
 
 for i in range(10):
-    enemy = Enemy(zombie_images[0], 100, 100, 50, 50, 1.5)
+    enemy = Enemy(zombie_images[0], 100, 100, 50, 50, 2)
     enemy.spawn()
     enemies.add(enemy)
 
@@ -22,17 +25,38 @@ while True:
             enemy.draw()
 
             if player.hitbox.colliderect(enemy.hitbox):
-                damage_sound.play()
-                player.hp -= 20
-                enemy.spawn()
+                if enemy.w == 50:
+                    damage_sound.play()
+                    player.hp -= 10
+                    enemy.spawn()
+                else:
+                    damage_sound.play()
+                    player.hp -= 20
+                    enemy.kill()
+                    boss_round = False
+
 
         collide = pygame.sprite.groupcollide(bullets, enemies,True, False)
         for bullet in collide:
             for enemy in collide[bullet]:
                 enemy.hp -= 1
                 if enemy.hp <= 0:
-                    coin_sound.play()
-                    enemy.spawn()
+                    if enemy.w == 50:
+                        coin_sound.play()
+                        enemy.spawn()
+                        scores += 1
+                    else:
+                        coins_sound.play()
+                        enemy.kill()
+                        scores += 10
+                        boss_round = False
+
+        if scores % 15 == 0 and scores != 0 and not boss_round:
+            boss = Enemy(zombie_images[0], 100, 100, 100, 100, 2)
+            boss.max_hp = 15
+            boss.spawn()
+            enemies.add(boss)
+            boss_round = True
 
         player.update()
         player.draw()
@@ -48,7 +72,7 @@ while True:
         win.blit(text, (615, 507))
         win.blit(hpicon, (585, 497))
 
-        if player.hp == 0:
+        if player.hp <= 0:
             death_sound.play()
             win.blit(death_image, (0, 0))
             game = False
