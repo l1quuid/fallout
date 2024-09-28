@@ -139,8 +139,8 @@ class Button(pygame.sprite.Sprite):
         self.pressed = False
 
         self.surface = pygame.Surface((w, h))
-        rect = self.surface.get_rect()
-        rect.center = x, y
+        self.rect = self.surface.get_rect()
+        self.rect.center = x, y
 
         self.text = label
         self.label_rect = self.text.get_rect()
@@ -149,6 +149,32 @@ class Button(pygame.sprite.Sprite):
 
         self.surface.fill(self.color)
         self.surface.blit(self.text, self.label_rect)
+
+    def is_on(self):
+        x, y = pygame.mouse.get_pos()
+        on = self.rect.collidepoint(x, y)
+        if on:
+            self.surface.fill(self.light_color)
+        else:
+            self.surface.fill(self.color)
+        return on
+
+    def is_press(self):
+        bt = pygame.mouse.get_pressed()
+        if self.is_on() and bt[0] and not self.pressed:
+            self.pressed = True
+            self.callback()
+
+        if not bt[0]:
+            self.pressed = False
+
+    def update(self):
+        self.is_press()
+        self.surface.blit(self.text, self.label_rect)
+
+
+    def draw(self):
+        win.blit(self.surface, self.rect)
 
 
 
